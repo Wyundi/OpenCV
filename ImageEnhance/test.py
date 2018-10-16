@@ -2,19 +2,22 @@
 # -*- coding:utf-8 -*-
 # Author: Wyundi
 
+# https://blog.csdn.net/guanzhen3657/article/details/81138868
+
 import numpy as np
 import cv2 as cv
 import os
 
-path1 = "C:\\1"
-path2 = "C:\\2"
-path2_1 = "C:\\2\\1"
-path2_2 = "C:\\2\\2"
-path2_3 = "C:\\2\\3"
-path2_4 = "C:\\2\\4"
+path1 = "D:\\Project\\Code\\Git\\OpenCV\\ImageEnhance\\OriginImage"
+path2 = "D:\\Project\\Code\\Git\\OpenCV\\ImageEnhance\\Enhance"
+path2_1 = path2 + "\\" + "2_1"
+path2_2 = path2 + "\\" + "2_2"
+path2_3 = path2 + "\\" + "2_3"
+path2_4 = path2 + "\\" + "2_4"
 
 files= os.listdir(path1)
 
+# 直方图均衡化
 def Line(path):
     isExists=os.path.exists(path)
     if isExists == False:
@@ -22,7 +25,7 @@ def Line(path):
 
     for i in range(len(files)):
         img = cv.imread(path1+'\\'+files[i],1)
-
+        
         hist,bins = np.histogram(img.flatten(),256,[0,256])
         cdf = hist.cumsum()
         cdf_normalized = cdf * float(hist.max()) / cdf.max()
@@ -33,6 +36,8 @@ def Line(path):
         img = cdf[img]
 
         cv.imwrite(path+'\\'+files[i], img)
+
+
 
 def main():
     Line(path2_1)
